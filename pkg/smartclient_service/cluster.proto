@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package smartclient_service;
+
+// define a service
+service PolarDBManagerService {
+    // define the interface and data type
+    rpc SubscribeEvent (stream Request) returns (stream Response) {};
+}
+
+// define the data type of request
+message Request {
+    string username = 1;
+    string password = 2;
+    string database = 3;
+    string message  = 4;
+}
+
+// define the data type of response
+message Response {
+    string message = 1;
+    TopologyEvent topology_event = 2;
+    HAEvent ha_event = 3;
+    LBEvent lb_event = 4;
+}
+
+message TopologyEvent {
+    repeated TopologyNode topology = 1;
+}
+message TopologyNode {
+    repeated MaxScale maxscale = 1;
+    repeated DBNode rw = 2;
+    repeated DBNode ro = 3;
+    repeated CMNode cm = 4;
+    bool is_master = 5;
+    bool is_datamax = 6;
+}
+message CMNode {
+    string region = 1;
+    string az = 2;
+    string endpoint = 3;
+}
+message MaxScale {
+    string region = 1;
+    string az = 2;
+    string endpoint = 3;
+}
+message DBNode {
+    string region = 1;
+    string az = 2;
+    string endpoint = 3;
+}
+message HAEvent {
+    string event_type = 1;
+    string host = 2;
+    string status = 3;
+    string reason = 4;
+    string timestamp = 5;
+}
+message LBEvent {
+}

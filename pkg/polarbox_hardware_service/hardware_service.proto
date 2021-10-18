@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package polarbox.hardware_service;
+
+import "google/protobuf/timestamp.proto";
+
+message RequestInfo {
+    string appname = 1;
+}
+
+enum RetCode {
+    OK = 0;
+    FAIL = 1;
+}
+
+message ResponseInfo {
+    RetCode ret = 1;
+}
+
+message GetDBServerStatusRequest {
+    RequestInfo info = 1;
+    string hostip = 2;
+    string hostname = 3;
+}
+
+message GetDBServerStatusResponse {
+    ResponseInfo info = 1;
+    string status = 2;
+    google.protobuf.Timestamp timestamp = 3;
+}
+
+message GetSwitchStatusRequest {
+    RequestInfo info = 1;
+    string hostip = 2;
+    string hostname = 3;
+}
+
+message PortStatus {
+    int32 OperStatus = 1;
+    int32 AdminStatus = 2;
+    string Name = 3;
+}
+
+message GetSwitchStatusResponse {
+    ResponseInfo info = 1;
+    repeated PortStatus status = 2;
+    google.protobuf.Timestamp timestamp = 3;
+}
+
+service Hardware {
+    rpc GetDBServerStatus (GetDBServerStatusRequest) returns (GetDBServerStatusResponse);
+    rpc GetSwitchStatus (GetSwitchStatusRequest) returns (GetSwitchStatusResponse);
+}

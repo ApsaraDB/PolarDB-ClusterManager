@@ -1,0 +1,4 @@
+# binaries
+.gitignore
+go.sum
+pkg/version
