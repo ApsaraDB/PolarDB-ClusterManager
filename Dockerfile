@@ -10,7 +10,7 @@ COPY . /go/src/gitlab.alibaba-inc.com/RDS_PG/polardb_cluster_manager/
 
 RUN CGO_ENABLED=0 go build -mod=vendor -ldflags=-compressdwarf=false -gcflags='all=-N -l' -o polardb-cluster-manager cmd/manager/main.go
 
-FROM alpine:3.13 as prod
+FROM alpine:3.14 as prod
 
 WORKDIR /root/
 
